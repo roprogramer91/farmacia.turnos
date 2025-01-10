@@ -1,17 +1,27 @@
-document.addEventListener("DOMContentLoaded", async () => {
-    const nombreFarmacia = document.getElementById("nombre-farmacia");
-    const direccionFarmacia = document.getElementById("direccion-farmacia");
-
+document.addEventListener('DOMContentLoaded', async () => {
     try {
-        const response = await fetch("https://farmacia-turnos.vercel.app/api/farmacia/turno");
-        if (!response.ok) throw new Error("Error al obtener la farmacia de turno");
-
+        const response = await fetch('https://farmacia-turnos.vercel.app/api/farmacia/turno');
         const data = await response.json();
-        nombreFarmacia.textContent = `Nombre: ${data.turno}`;
-        direccionFarmacia.textContent = `Dirección: ${data.ubicacion}`;
+
+        if (response.ok) {
+            document.getElementById('farmacia-nombre').innerText = `Nombre: ${data.turno}`;
+            document.getElementById('farmacia-direccion').innerText = `Dirección: ${data.ubicacion}`;
+
+            const mapsLink = document.getElementById('farmacia-maps');
+            mapsLink.href = data.google_maps_url;
+            mapsLink.style.display = 'inline-block'; // Muestra el botón si hay un enlace
+
+            const imgElement = document.getElementById('farmacia-imagen');
+            if (data.imagen_url) {
+                imgElement.src = data.imagen_url;
+                imgElement.style.display = 'block'; // Muestra la imagen si existe
+            }
+        } else {
+            document.getElementById('farmacia-nombre').innerText = 'Error al cargar datos';
+            document.getElementById('farmacia-direccion').innerText = data.message || 'No se pudo obtener la información.';
+        }
     } catch (error) {
-        nombreFarmacia.textContent = "Error al cargar los datos";
-        direccionFarmacia.textContent = "";
-        console.error(error);
+        document.getElementById('farmacia-nombre').innerText = 'Error al cargar datos';
+        document.getElementById('farmacia-direccion').innerText = error.message;
     }
 });
