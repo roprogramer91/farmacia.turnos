@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const { getFarmaciaTurno } = require('../controllers/farmacia.controller');
+const pool = require('../../config/database');
 
 const router = Router();
 
