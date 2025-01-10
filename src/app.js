@@ -1,7 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
-const uploadRoutes = require('./routes/upload.routes');
 require('dotenv').config();
 
 const app = express();
