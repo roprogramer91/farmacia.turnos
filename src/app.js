@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
+const uploadRoutes = require('./routes/upload.routes');
 require('dotenv').config();
 
 const app = express();
@@ -12,5 +13,8 @@ app.use(express.json());
 
 // Rutas
 app.use('/api/farmacia', require('./routes/farmacia.routes'));
+
+app.use('/api/uploads', uploadRoutes);
+
 
 module.exports = app; // Exportar la app para que server.js la use
