@@ -14,7 +14,7 @@ app.use(express.json());
 // Rutas
 app.use('/api/farmacia', require('./routes/farmacia.routes'));
 
-app.use('/api/uploads', uploadRoutes);
+
 
 
 module.exports = app; // Exportar la app para que server.js la use
