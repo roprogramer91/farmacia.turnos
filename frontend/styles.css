@@ -1,0 +1,75 @@
+/* General */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    text-align: center;
+}
+
+/* Encabezado */
+header {
+    background-color: #0078d7;
+    color: white;
+    padding: 1rem 0.5rem;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+header h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+
+/* Sección de la tarjeta */
+main {
+    padding: 1.5rem;
+}
+
+#farmacia {
+    background-color: white;
+    padding: 1.5rem;
+    margin: 0 auto;
+    max-width: 400px; /* Limitar el ancho en pantallas grandes */
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+#farmacia h3 {
+    color: #0078d7;
+    margin: 0 0 0.5rem 0;
+    font-size: 1.2rem;
+}
+
+#farmacia p {
+    margin: 0;
+    font-size: 1rem;
+    color: #555;
+}
+
+/* Pie de página */
+footer {
+    margin-top: 2rem;
+    font-size: 0.9rem;
+}
+
+/* Responsividad */
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 1.2rem;
+    }
+
+    header h2 {
+        font-size: 1rem;
+    }
+
+    #farmacia {
+        padding: 1rem;
+    }
+}
