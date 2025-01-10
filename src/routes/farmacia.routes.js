@@ -10,4 +10,14 @@ router.get('/test', (req, res) => {
   });
   
 
+  router.get('/db-test', async (req, res) => {
+    try {
+        const [rows] = await pool.query('SHOW TABLES');
+        res.json({ message: 'Conexión exitosa', tables: rows });
+    } catch (error) {
+        console.error('Error al conectar con la base de datos:', error);
+        res.status(500).json({ message: 'Error al conectar con la base de datos', error: error.message });
+    }
+});
+
 module.exports = router;
