@@ -1,27 +1,33 @@
 document.addEventListener('DOMContentLoaded', async () => {
+    const nombreElem = document.getElementById('farmacia-nombre');
+    const direccionElem = document.getElementById('farmacia-direccion');
+    const mapsElem = document.getElementById('farmacia-maps');
+    const imagenElem = document.getElementById('farmacia-imagen');
+
     try {
         const response = await fetch('https://farmacia-turnos.vercel.app/api/farmacia/turno');
         const data = await response.json();
 
         if (response.ok) {
-            document.getElementById('farmacia-nombre').innerText = `Nombre: ${data.turno}`;
-            document.getElementById('farmacia-direccion').innerText = `Dirección: ${data.ubicacion}`;
+            nombreElem.textContent = `Nombre: ${data.turno}`;
+            direccionElem.textContent = `Dirección: ${data.ubicacion}`;
+            mapsElem.href = data.google_maps_url;
 
-            const mapsLink = document.getElementById('farmacia-maps');
-            mapsLink.href = data.google_maps_url;
-            mapsLink.style.display = 'inline-block'; // Muestra el botón si hay un enlace
-
-            const imgElement = document.getElementById('farmacia-imagen');
+            // Verificar si imagen_url está presente
             if (data.imagen_url) {
-                imgElement.src = data.imagen_url;
-                imgElement.style.display = 'block'; // Muestra la imagen si existe
+                imagenElem.src = data.imagen_url;
+                imagenElem.alt = `Imagen de ${data.turno}`;
+            } else {
+                imagenElem.style.display = 'none'; // Ocultar la imagen si no hay URL
             }
         } else {
-            document.getElementById('farmacia-nombre').innerText = 'Error al cargar datos';
-            document.getElementById('farmacia-direccion').innerText = data.message || 'No se pudo obtener la información.';
+            throw new Error(data.message || 'Error desconocido al cargar los datos');
         }
     } catch (error) {
-        document.getElementById('farmacia-nombre').innerText = 'Error al cargar datos';
-        document.getElementById('farmacia-direccion').innerText = error.message;
+        console.error(error);
+        nombreElem.textContent = 'Error al cargar datos';
+        direccionElem.textContent = error.message;
+        mapsElem.style.display = 'none'; // Ocultar el enlace de Google Maps si hay un error
+        if (imagenElem) imagenElem.style.display = 'none'; // Ocultar la imagen si hay un error
     }
 });
