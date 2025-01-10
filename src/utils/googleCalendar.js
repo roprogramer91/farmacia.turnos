@@ -28,5 +28,3 @@ const getEvents = async () => {
 
 module.exports = { getEvents };
 
-
-module.exports = { getEvents };
