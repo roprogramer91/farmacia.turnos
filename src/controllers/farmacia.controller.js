@@ -9,7 +9,10 @@ const getFarmaciaTurno = async (req, res) => {
     }
 
     const farmaciaTurno = events[0].summary;
+    
+    console.log('Nombre de farmacia del calendario:', farmaciaTurno);
     const [result] = await pool.query('SELECT * FROM farmacias WHERE nombre = ?', [farmaciaTurno]);
+    console.log('Resultado de la consulta:', result);
 
     if (result.length > 0) {
       const farmacia = result[0];
