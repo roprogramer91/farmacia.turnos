@@ -1,9 +1,8 @@
 const { google } = require('googleapis');
 
-// Parsea el contenido del archivo JSON desde la variable de entorno
 const auth = new google.auth.GoogleAuth({
-  credentials: JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS),
-  scopes: ['https://www.googleapis.com/auth/calendar.readonly'], // Solo lectura
+  keyFile: process.env.GOOGLE_APPLICATION_CREDENTIALS, // Usar la ruta del archivo
+  scopes: ['https://www.googleapis.com/auth/calendar.readonly'], // Permisos de solo lectura
 });
 
 const calendar = google.calendar({ version: 'v3', auth });

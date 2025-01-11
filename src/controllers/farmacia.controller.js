@@ -34,4 +34,35 @@ const getFarmaciaTurno = async (req, res) => {
   }
 };
 
-module.exports = { getFarmaciaTurno }; // Asegúrate de exportarlo correctamente.
+
+const getFarmacias = async (req, res) => {
+  try {
+    const response = await calendar.events.list({
+      calendarId: process.env.GOOGLE_CALENDAR_ID,
+      timeMin: new Date().toISOString(), // Obtener eventos desde ahora
+      singleEvents: true, // Solo eventos únicos
+      orderBy: 'startTime', // Ordenados por fecha de inicio
+    });
+
+    const events = response.data.items;
+
+    if (!events || events.length === 0) {
+      return res.status(404).json({ message: 'No se encontraron eventos en el calendario' });
+    }
+
+    // Extraer información relevante
+    const farmacias = events.map(event => ({
+      nombre: event.summary || 'Sin nombre',
+      ubicacion: event.location || 'Sin ubicación',
+      descripcion: event.description || 'Sin descripción',
+      inicio: event.start?.date || 'Sin fecha de inicio',
+      fin: event.end?.date || 'Sin fecha de fin',
+    }));
+
+    res.json(farmacias); // Devolver la lista de farmacias como JSON
+  } catch (error) {
+    console.error('Error al obtener farmacias:', error.message);
+    res.status(500).json({ message: 'Error al obtener farmacias del calendario', error: error.message });
+  }
+};
+module.exports = { getFarmaciaTurno, getFarmacias };

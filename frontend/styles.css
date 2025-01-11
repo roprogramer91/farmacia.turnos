@@ -5,7 +5,6 @@ body {
     padding: 0;
     background-color: #f4f4f4;
     color: #333;
-    text-align: center;
 }
 
 /* Encabezado */
@@ -13,6 +12,7 @@ header {
     background-color: #0078d7;
     color: white;
     padding: 1rem 0.5rem;
+    text-align: center;
 }
 
 header h1 {
@@ -20,18 +20,27 @@ header h1 {
     font-size: 1.5rem;
 }
 
-header h2 {
-    margin: 0;
-    font-size: 1.2rem;
-    font-weight: 300;
+/* Título de Farmacia de Turno */
+#titulo-turno {
+    background-color: #f4f4f4;
+    padding: 0.5rem 0;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
 }
 
-/* Sección de la tarjeta */
+#titulo-turno h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #0078d7;
+    font-weight: 600;
+}
+
+/* Tarjeta de Farmacia */
 main {
     padding: 1.5rem;
 }
 
-#farmacia {
+.card {
     background-color: white;
     padding: 1.5rem;
     margin: 0 auto;
@@ -41,45 +50,102 @@ main {
     text-align: left;
 }
 
-#farmacia h3 {
+.card h3 {
     color: #0078d7;
-    margin: 0 0 0.5rem 0;
-    font-size: 1.2rem;
+    margin: 0 0 1rem 0;
+    font-size: 1.5rem;
+    text-align: center;
 }
 
-#farmacia p {
+.card p {
     margin: 0;
     font-size: 1rem;
     color: #555;
+    text-align: center;
 }
+
+/* Imagen de la Farmacia */
+#farmacia-imagen {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    display: block;
+    margin: 1rem auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+    background-color: #0078d7; 
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    margin: 1.5rem auto; 
+    display: block; 
+    max-width: fit-content; 
+}
+
+.btn:hover {
+    background-color: #005bb5; /* Azul más oscuro al pasar el cursor */
+}
+
+.btn:active {
+    background-color: #003f8a; /* Azul más oscuro al hacer clic */
+}
+
 
 /* Pie de página */
 footer {
     margin-top: 2rem;
     font-size: 0.9rem;
+    text-align: center;
 }
 
 /* Responsividad */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     header h1 {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
     }
 
-    header h2 {
-        font-size: 1rem;
+    #titulo-turno h2 {
+        font-size: 1.1rem;
     }
 
-    #farmacia {
+    .card {
         padding: 1rem;
+        max-width: 95%; /* Ajustar para pantallas pequeñas */
+    }
+
+    .card h3 {
+        font-size: 1.3rem;
+    }
+
+    #farmacia-imagen {
+        border-radius: 8px;
     }
 }
 
-/* Estilo para la imagen de la farmacia */
-#farmacia-imagen {
-    width: 100%; /* La imagen ocupará todo el ancho del contenedor */
-    height: auto; /* Mantendrá la proporción de la imagen */
-    border-radius: 10px; /* Bordes redondeados para armonizar con el diseño */
-    display: block;
-    margin: 1rem auto; /* Centrar la imagen vertical y horizontalmente */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil para un mejor diseño */
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.1rem;
+    }
+
+    #titulo-turno h2 {
+        font-size: 1.5rem;
+    }
+
+    .card h3 {
+        font-size: 1.2rem;
+    }
+
+    .card p {
+        font-size: 0.9rem;
+    }
 }

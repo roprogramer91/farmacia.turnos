@@ -9,9 +9,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         const data = await response.json();
 
         if (response.ok) {
-            nombreElem.textContent = `Nombre: ${data.turno}`;
+            // Asignar datos al DOM
+            nombreElem.textContent = `${data.turno}`;
             direccionElem.textContent = `Dirección: ${data.ubicacion}`;
             mapsElem.href = data.google_maps_url;
+
+            // Mostrar el botón si hay una URL válida
+            if (data.google_maps_url) {
+                mapsElem.style.display = 'block'; // Asegurarte de que sea visible
+            } else {
+                mapsElem.style.display = 'none'; // Ocultar si no hay enlace
+            }
 
             // Verificar si imagen_url está presente
             if (data.imagen_url) {
@@ -25,9 +33,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     } catch (error) {
         console.error(error);
+
+        // Mostrar error en el DOM
         nombreElem.textContent = 'Error al cargar datos';
         direccionElem.textContent = error.message;
-        mapsElem.style.display = 'none'; // Ocultar el enlace de Google Maps si hay un error
-        if (imagenElem) imagenElem.style.display = 'none'; // Ocultar la imagen si hay un error
+
+        // Ocultar elementos en caso de error
+        mapsElem.style.display = 'none';
+        if (imagenElem) imagenElem.style.display = 'none';
     }
 });
