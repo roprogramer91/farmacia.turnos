@@ -1,3 +1,5 @@
+const { google } = require('googleapis');
+
 // Parsea el contenido del archivo JSON desde la variable de entorno
 const auth = new google.auth.GoogleAuth({
   credentials: JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS),
@@ -24,3 +26,5 @@ const getEvents = async () => {
     throw error;
   }
 };
+
+module.exports = { getEvents };
