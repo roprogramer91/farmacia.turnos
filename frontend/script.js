@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const direccionElem = document.getElementById('farmacia-direccion');
     const mapsElem = document.getElementById('farmacia-maps');
     const imagenElem = document.getElementById('farmacia-imagen');
-    const telefonoElem = document.getElementById('farmacia-telefono'); // Nuevo elemento
+    const telefonoLinkElem = document.getElementById('farmacia-telefono-link'); // Solo el enlace
 
     try {
         const response = await fetch('https://farmacia-turnos.vercel.app/api/farmacia/turno');
@@ -22,13 +22,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                 mapsElem.style.display = 'none'; // Ocultar si no hay enlace
             }
 
-            // Mostrar el enlace de teléfono si está disponible
+            // Mostrar el enlace del número de teléfono si está disponible
             if (data.telefono) {
-                telefonoElem.href = `tel:${data.telefono}`;
-                telefonoElem.textContent = `Teléfono: ${data.telefono}`;
-                telefonoElem.style.display = 'block'; // Asegúrate de que sea visible
+                telefonoLinkElem.href = `tel:${data.telefono}`;
+                telefonoLinkElem.textContent = data.telefono; // Solo el número es un enlace
+                telefonoLinkElem.style.display = 'inline'; // Asegúrate de que sea visible
             } else {
-                telefonoElem.style.display = 'none'; // Ocultar si no hay teléfono
+                telefonoLinkElem.style.display = 'none'; // Ocultar si no hay teléfono
             }
 
             // Verificar si imagen_url está presente
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Ocultar elementos en caso de error
         mapsElem.style.display = 'none';
-        telefonoElem.style.display = 'none';
+        telefonoLinkElem.style.display = 'none';
         if (imagenElem) imagenElem.style.display = 'none';
     }
 });
