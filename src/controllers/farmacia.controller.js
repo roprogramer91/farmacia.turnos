@@ -9,7 +9,6 @@ const getFarmaciaTurno = async (req, res) => {
     }
 
     const farmaciaTurno = events[0].summary;
-    console.log (farmaciaTurno);
     const [result] = await pool.query('SELECT * FROM farmacias WHERE nombre = ?', [farmaciaTurno]);
 
     if (result.length > 0) {
@@ -17,8 +16,8 @@ const getFarmaciaTurno = async (req, res) => {
       res.json({
         turno: farmacia.nombre,
         ubicacion: farmacia.direccion,
-        imagen_url: farmacia.imagen_url,
         google_maps_url: farmacia.google_maps_url,
+        imagen_url: farmacia.imagen_url,
       });
     } else {
       res.status(404).json({
