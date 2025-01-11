@@ -9,7 +9,7 @@ const getFarmaciaTurno = async (req, res) => {
     }
 
     const farmaciaTurno = events[0].summary;
-    console.log = (farmaciaTurno);
+    console.log (farmaciaTurno);
     const [result] = await pool.query('SELECT * FROM farmacias WHERE nombre = ?', [farmaciaTurno]);
 
     if (result.length > 0) {
