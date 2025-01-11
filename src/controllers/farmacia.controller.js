@@ -37,15 +37,7 @@ const getFarmaciaTurno = async (req, res) => {
 
 const getFarmacias = async (req, res) => {
   try {
-    const response = await calendar.events.list({
-      calendarId: process.env.GOOGLE_CALENDAR_ID,
-      timeMin: new Date().toISOString(), // Obtener eventos desde ahora
-      singleEvents: true, // Solo eventos únicos
-      orderBy: 'startTime', // Ordenados por fecha de inicio
-    });
-
-    const events = response.data.items;
-
+    const events = await getEvents(); // Llama a la función getEvents del util
     if (!events || events.length === 0) {
       return res.status(404).json({ message: 'No se encontraron eventos en el calendario' });
     }
@@ -65,4 +57,6 @@ const getFarmacias = async (req, res) => {
     res.status(500).json({ message: 'Error al obtener farmacias del calendario', error: error.message });
   }
 };
+
+
 module.exports = { getFarmaciaTurno, getFarmacias };
