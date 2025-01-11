@@ -73,3 +73,13 @@ footer {
         padding: 1rem;
     }
 }
+
+/* Estilo para la imagen de la farmacia */
+#farmacia-imagen {
+    width: 100%; /* La imagen ocupará todo el ancho del contenedor */
+    height: auto; /* Mantendrá la proporción de la imagen */
+    border-radius: 10px; /* Bordes redondeados para armonizar con el diseño */
+    display: block;
+    margin: 1rem auto; /* Centrar la imagen vertical y horizontalmente */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil para un mejor diseño */
+}
