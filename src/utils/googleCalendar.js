@@ -1,10 +1,9 @@
 const { google } = require('googleapis');
 
 const auth = new google.auth.GoogleAuth({
-  keyFile: process.env.GOOGLE_APPLICATION_CREDENTIALS, // Ruta al archivo JSON
-  scopes: ['https://www.googleapis.com/auth/calendar.readonly'], // Solo lectura
+  keyFile: process.env.GOOGLE_APPLICATION_CREDENTIALS, // Usar la ruta del archivo
+  scopes: ['https://www.googleapis.com/auth/calendar.readonly'], // Permisos de solo lectura
 });
-
 
 const calendar = google.calendar({ version: 'v3', auth });
 
@@ -28,4 +27,3 @@ const getEvents = async () => {
 };
 
 module.exports = { getEvents };
-
