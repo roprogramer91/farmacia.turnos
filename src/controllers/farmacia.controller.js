@@ -19,6 +19,7 @@ const getFarmaciaTurno = async (req, res) => {
       res.json({
         turno: farmacia.nombre,
         ubicacion: farmacia.direccion,
+        telefono: farmacia.telefono, // Agregar el teléfono a la respuesta
         google_maps_url: farmacia.google_maps_url,
         imagen_url: farmacia.imagen_url,
       });
@@ -33,7 +34,6 @@ const getFarmaciaTurno = async (req, res) => {
     res.status(500).json({ message: 'Error al obtener farmacia de turno', error: error.message });
   }
 };
-
 
 const getFarmacias = async (req, res) => {
   try {
@@ -57,6 +57,5 @@ const getFarmacias = async (req, res) => {
     res.status(500).json({ message: 'Error al obtener farmacias del calendario', error: error.message });
   }
 };
-
 
 module.exports = { getFarmaciaTurno, getFarmacias };
