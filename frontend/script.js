@@ -39,6 +39,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             } else {
                 imagenElem.style.display = 'none'; // Ocultar la imagen si no hay URL
             }
+
+            // Ocultar mensaje de carga y mostrar la tarjeta
+            document.getElementById("mensaje-carga").style.display = "none";
+            document.querySelector(".card").style.display = "block";
+
         } else {
             throw new Error(data.message || 'Error desconocido al cargar los datos');
         }
