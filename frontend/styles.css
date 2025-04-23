@@ -22,8 +22,8 @@ header h1 {
 
 /* Título de Farmacia de Turno */
 #titulo-turno {
+    padding-bottom: 20px;
     background-color: #f4f4f4;
-    padding: 0.5rem 0;
     text-align: center;
     border-bottom: 1px solid #ddd;
 }
@@ -41,9 +41,10 @@ main {
 }
 
 .card {
+    margin-top: 10px;
     background-color: white;
     padding: 1.5rem;
-    margin: 0 auto;
+    margin: 10px auto;
     max-width: 400px; /* Limitar el ancho en pantallas grandes */
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
