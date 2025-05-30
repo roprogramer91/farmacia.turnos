@@ -138,5 +138,5 @@ module.exports = {
   getFarmaciaTurno,
   getFarmacias,
   getFarmaciaTurnoPorFecha,
-  getFarmaciasAyerHoyManian
+  getFarmaciasAyerHoyManiana
 }; 
