@@ -67,8 +67,13 @@ const getFarmaciaTurnoPorFecha = async (fecha) => {
       return null;
     }
 
-    // Filtrar evento por fecha exacta
-    const eventoDelDia = events.find(event => event.start?.date === fecha);
+    // Filtrar evento por fecha exacta (adaptado para evitar problemas de formato)
+    const eventoDelDia = events.find(event => {
+      const eventDate = event.start?.date || event.start?.dateTime;
+      if (!eventDate) return false;
+      const eventDateString = new Date(eventDate).toISOString().split('T')[0];
+      return eventDateString === fecha;
+    });
 
     if (!eventoDelDia) {
       return null;
