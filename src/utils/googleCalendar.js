@@ -11,9 +11,14 @@ const calendar = google.calendar({ version: 'v3', auth });
 const getEvents = async () => {
   try {
     console.log("Solicitando eventos al calendario...");
+
+    // 🔧 Ajustamos timeMin para incluir eventos desde hace 3 días
+    const timeMin = new Date();
+    timeMin.setDate(timeMin.getDate() - 3); // Traemos eventos desde hace 3 días
+
     const response = await calendar.events.list({
       calendarId: process.env.GOOGLE_CALENDAR_ID, // ID del calendario
-      timeMin: new Date().toISOString(), // Desde ahora
+      timeMin: timeMin.toISOString(), // Desde hace 3 días hasta ahora y a futuro
       maxResults: 10, // Máximo de eventos
       singleEvents: true,
       orderBy: 'startTime',
