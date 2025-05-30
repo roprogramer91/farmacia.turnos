@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getFarmaciaTurno, getFarmacias } = require('../controllers/farmacia.controller');
+const { getFarmaciaTurno, getFarmacias, getFarmaciasAyerHoyManiana } = require('../controllers/farmacia.controller');
 const pool = require('../../config/database');
 
 const router = Router();
@@ -22,6 +22,9 @@ router.get('/test', (req, res) => {
         console.error('Error al conectar con la base de datos:', error);
         res.status(500).json({ message: 'Error al conectar con la base de datos', error: error.message });
     }
+
+    router.get('/farmacia/ayerhoymaniana', getFarmaciasAyerHoyManiana);
+
 });
 
 module.exports = router;
