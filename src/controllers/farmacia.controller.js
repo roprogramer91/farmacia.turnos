@@ -4,37 +4,21 @@ const pool = require('../../config/database'); // Asegúrate de que esta ruta se
 // 🔹 Controlador para obtener la farmacia de turno de hoy
 const getFarmaciaTurno = async (req, res) => {
   try {
-    const events = await getEvents();
-    if (events.length === 0) {
-      return res.status(404).json({ message: 'No se encontró farmacia de turno en el calendario' });
+    const hoy = new Date();
+    const formatFecha = hoy.toISOString().split('T')[0];
+    const farmaciaHoy = await getFarmaciaTurnoPorFecha(formatFecha);
+
+    if (!farmaciaHoy) {
+      return res.status(404).json({ message: 'No se encontró farmacia de turno para hoy' });
     }
 
-    const farmaciaTurno = events[0].summary;
-    console.log('Nombre de farmacia del calendario:', farmaciaTurno);
-
-    const [result] = await pool.query('SELECT * FROM farmacias WHERE nombre = ?', [farmaciaTurno]);
-    console.log('Resultado de la consulta:', result);
-
-    if (result.length > 0) {
-      const farmacia = result[0];
-      res.json({
-        turno: farmacia.nombre,
-        ubicacion: farmacia.direccion,
-        telefono: farmacia.telefono,
-        google_maps_url: farmacia.google_maps_url,
-        imagen_url: farmacia.imagen_url,
-      });
-    } else {
-      res.status(404).json({
-        message: `No se encontraron detalles adicionales para la farmacia ${farmaciaTurno}`,
-        turno: farmaciaTurno,
-      });
-    }
+    res.json(farmaciaHoy);
   } catch (error) {
     console.error('Error en /turno:', error.message);
     res.status(500).json({ message: 'Error al obtener farmacia de turno', error: error.message });
   }
 };
+
 
 // 🔹 Controlador para obtener todas las farmacias desde el calendario
 const getFarmacias = async (req, res) => {
