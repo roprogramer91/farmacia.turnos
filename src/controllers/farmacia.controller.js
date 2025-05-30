@@ -67,6 +67,9 @@ const getFarmaciaTurnoPorFecha = async (fecha) => {
       return null;
     }
 
+    console.log('📅 Todos los eventos obtenidos:', JSON.stringify(events, null, 2));
+    console.log('🔎 Buscando evento con fecha:', fecha);
+
     const eventoDelDia = events.find(event => {
       const eventDate = event.start?.date || event.start?.dateTime;
       if (!eventDate) return false;
@@ -74,8 +77,12 @@ const getFarmaciaTurnoPorFecha = async (fecha) => {
       const eventDateObj = new Date(eventDate);
       const formattedEventDate = eventDateObj.toISOString().split('T')[0];
 
+      console.log('➡️ Comparando evento:', formattedEventDate, 'con', fecha);
+
       return formattedEventDate === fecha || eventDate === fecha;
     });
+
+    console.log('📝 Evento encontrado:', eventoDelDia);
 
     if (!eventoDelDia) {
       return null;
@@ -107,6 +114,7 @@ const getFarmaciaTurnoPorFecha = async (fecha) => {
     throw error;
   }
 };
+
 
 
 // 🔹 Controlador para devolver ayer, hoy y mañana
