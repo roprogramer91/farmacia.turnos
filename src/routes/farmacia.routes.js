@@ -25,6 +25,6 @@ router.get('/test', (req, res) => {
 
 });
 
-    router.get('/farmacia/ayerhoymaniana', getFarmaciasAyerHoyManiana);
+router.get('/ayerhoymaniana', getFarmaciasAyerHoyManiana);
 
 module.exports = router;
