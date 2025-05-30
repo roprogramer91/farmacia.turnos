@@ -23,8 +23,8 @@ router.get('/test', (req, res) => {
         res.status(500).json({ message: 'Error al conectar con la base de datos', error: error.message });
     }
 
-    router.get('/farmacia/ayerhoymaniana', getFarmaciasAyerHoyManiana);
-
 });
+
+    router.get('/farmacia/ayerhoymaniana', getFarmaciasAyerHoyManiana);
 
 module.exports = router;
