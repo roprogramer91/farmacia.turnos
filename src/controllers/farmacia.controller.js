@@ -53,13 +53,16 @@ const getFarmaciaTurnoPorFecha = async (fecha) => {
     console.log('📅 Todos los eventos obtenidos:', JSON.stringify(events, null, 2));
     console.log('🔎 Buscando farmacia para fecha base:', fecha);
 
-    // Armar fecha base a las 08:30 AM (hora de inicio del turno)
     const fechaBase = new Date(`${fecha}T08:30:00`);
 
-    // Buscar el evento de turno en base a la franja horaria de 8:30 a 8:30 del día siguiente
     const eventoDelDia = events.find(event => {
       const startDate = new Date(`${event.start.date}T08:30:00`);
-      const endDate = new Date(`${event.end.date}T08:30:00`);
+      const endDate = new Date(startDate);
+      endDate.setDate(startDate.getDate() + 1);
+      endDate.setHours(8, 30, 0, 0);
+
+      console.log(`➡️ Verificando turno: ${event.summary} | Inicio: ${startDate} | Fin: ${endDate}`);
+
       return fechaBase >= startDate && fechaBase < endDate;
     });
 
@@ -100,15 +103,10 @@ const getFarmaciaTurnoPorFecha = async (fecha) => {
 const getFarmaciasAyerHoyManiana = async (req, res) => {
   try {
     const hoy = new Date();
-    console.log('🌐 Hora del servidor (hoy):', hoy.toString(), '| UTC:', hoy.toISOString());
-
     const ayer = new Date(hoy);
     ayer.setDate(hoy.getDate() - 1);
-    console.log('🌐 Hora del servidor (ayer):', ayer.toString(), '| UTC:', ayer.toISOString());
-
     const manana = new Date(hoy);
     manana.setDate(hoy.getDate() + 1);
-    console.log('🌐 Hora del servidor (mañana):', manana.toString(), '| UTC:', manana.toISOString());
 
     const formatFecha = (fecha) => fecha.toISOString().split('T')[0];
 
