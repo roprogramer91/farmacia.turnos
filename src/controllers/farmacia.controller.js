@@ -43,27 +43,24 @@ const getFarmacias = async (req, res) => {
 };
 
 // 🔹 Función utilitaria: farmacia por fecha
+// 🔹 Función utilitaria: farmacia por fecha con turno 8:30 a 8:30
 const getFarmaciaTurnoPorFecha = async (fecha) => {
   try {
-    console.log('🔎 Buscando farmacia para fecha:', fecha);
-
     const events = await getEvents();
     if (events.length === 0) {
       return null;
     }
 
-    console.log('📅 Eventos obtenidos:', JSON.stringify(events, null, 2));
+    console.log('📅 Todos los eventos obtenidos:', JSON.stringify(events, null, 2));
+    console.log('🔎 Buscando evento con fecha:', fecha);
+
+    const fechaBusqueda = new Date(`${fecha}T08:30:00`); // buscamos desde las 08:30
 
     const eventoDelDia = events.find(event => {
-      const eventDate = event.start?.date || event.start?.dateTime;
-      if (!eventDate) return false;
-
-      const eventDateObj = new Date(eventDate);
-      const formattedEventDate = eventDateObj.toISOString().split('T')[0];
-
-      console.log('➡️ Evento:', formattedEventDate, '| Buscando:', fecha);
-
-      return formattedEventDate === fecha || eventDate === fecha;
+      const startDate = new Date(`${event.start.date}T08:30:00`);
+      const endDate = new Date(`${event.end.date}T08:30:00`); // siguiente día a las 8:30
+      // Ajuste: turno de 8:30 a 8:30, incluimos la hora
+      return fechaBusqueda >= startDate && fechaBusqueda < endDate;
     });
 
     console.log('📝 Evento encontrado:', eventoDelDia);
@@ -98,6 +95,7 @@ const getFarmaciaTurnoPorFecha = async (fecha) => {
     throw error;
   }
 };
+
 
 // 🔹 Controlador para devolver ayer, hoy y mañana
 const getFarmaciasAyerHoyManiana = async (req, res) => {
