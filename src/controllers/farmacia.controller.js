@@ -1,5 +1,5 @@
-const { getEvents } = require('../utils/googleCalendar'); // Importa correctamente el util
-const pool = require('../../config/database'); // Asegúrate de que esta ruta sea correcta.
+const { getEvents } = require('../utils/googleCalendar');
+const pool = require('../../config/database');
 
 // 🔹 Controlador para obtener la farmacia de turno de hoy
 const getFarmaciaTurno = async (req, res) => {
@@ -42,6 +42,7 @@ const getFarmacias = async (req, res) => {
   }
 };
 
+// 🔹 Función utilitaria para obtener la farmacia por fecha
 const getFarmaciaTurnoPorFecha = async (fecha) => {
   try {
     const events = await getEvents();
@@ -52,13 +53,14 @@ const getFarmaciaTurnoPorFecha = async (fecha) => {
     console.log('📅 Todos los eventos obtenidos:', JSON.stringify(events, null, 2));
     console.log('🔎 Buscando farmacia para fecha base:', fecha);
 
-    // Usar la fecha base a las 8:30 AM para la comparación
-    const fechaBusqueda = new Date(`${fecha}T08:30:00`);
+    // Armar fecha base a las 08:30 AM (hora de inicio del turno)
+    const fechaBase = new Date(`${fecha}T08:30:00`);
 
+    // Buscar el evento de turno en base a la franja horaria de 8:30 a 8:30 del día siguiente
     const eventoDelDia = events.find(event => {
       const startDate = new Date(`${event.start.date}T08:30:00`);
       const endDate = new Date(`${event.end.date}T08:30:00`);
-      return fechaBusqueda >= startDate && fechaBusqueda < endDate;
+      return fechaBase >= startDate && fechaBase < endDate;
     });
 
     console.log('📝 Evento encontrado:', eventoDelDia);
@@ -94,9 +96,7 @@ const getFarmaciaTurnoPorFecha = async (fecha) => {
   }
 };
 
-
-
-// 🔹 Controlador para devolver ayer, hoy y mañana
+// 🔹 Controlador para devolver farmacias de ayer, hoy y mañana
 const getFarmaciasAyerHoyManiana = async (req, res) => {
   try {
     const hoy = new Date();
