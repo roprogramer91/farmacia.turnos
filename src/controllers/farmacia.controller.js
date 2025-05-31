@@ -19,7 +19,6 @@ const getFarmaciaTurno = async (req, res) => {
   }
 };
 
-
 // 🔹 Controlador para obtener todas las farmacias desde el calendario
 const getFarmacias = async (req, res) => {
   try {
@@ -46,13 +45,14 @@ const getFarmacias = async (req, res) => {
 // 🔹 Función utilitaria: farmacia por fecha
 const getFarmaciaTurnoPorFecha = async (fecha) => {
   try {
+    console.log('🔎 Buscando farmacia para fecha:', fecha);
+
     const events = await getEvents();
     if (events.length === 0) {
       return null;
     }
 
-    console.log('📅 Todos los eventos obtenidos:', JSON.stringify(events, null, 2));
-    console.log('🔎 Buscando evento con fecha:', fecha);
+    console.log('📅 Eventos obtenidos:', JSON.stringify(events, null, 2));
 
     const eventoDelDia = events.find(event => {
       const eventDate = event.start?.date || event.start?.dateTime;
@@ -61,7 +61,7 @@ const getFarmaciaTurnoPorFecha = async (fecha) => {
       const eventDateObj = new Date(eventDate);
       const formattedEventDate = eventDateObj.toISOString().split('T')[0];
 
-      console.log('➡️ Comparando evento:', formattedEventDate, 'con', fecha);
+      console.log('➡️ Evento:', formattedEventDate, '| Buscando:', fecha);
 
       return formattedEventDate === fecha || eventDate === fecha;
     });
@@ -99,17 +99,19 @@ const getFarmaciaTurnoPorFecha = async (fecha) => {
   }
 };
 
-
-
 // 🔹 Controlador para devolver ayer, hoy y mañana
 const getFarmaciasAyerHoyManiana = async (req, res) => {
   try {
     const hoy = new Date();
-    const ayer = new Date(hoy);
-    const manana = new Date(hoy);
+    console.log('🌐 Hora del servidor (hoy):', hoy.toString(), '| UTC:', hoy.toISOString());
 
+    const ayer = new Date(hoy);
     ayer.setDate(hoy.getDate() - 1);
+    console.log('🌐 Hora del servidor (ayer):', ayer.toString(), '| UTC:', ayer.toISOString());
+
+    const manana = new Date(hoy);
     manana.setDate(hoy.getDate() + 1);
+    console.log('🌐 Hora del servidor (mañana):', manana.toString(), '| UTC:', manana.toISOString());
 
     const formatFecha = (fecha) => fecha.toISOString().split('T')[0];
 
@@ -134,4 +136,4 @@ module.exports = {
   getFarmacias,
   getFarmaciaTurnoPorFecha,
   getFarmaciasAyerHoyManiana
-}; 
+};
