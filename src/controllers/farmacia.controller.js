@@ -42,7 +42,6 @@ const getFarmacias = async (req, res) => {
   }
 };
 
-// 🔹 Función utilitaria: farmacia por fecha
 const getFarmaciaTurnoPorFecha = async (fecha) => {
   try {
     const events = await getEvents();
@@ -51,15 +50,15 @@ const getFarmaciaTurnoPorFecha = async (fecha) => {
     }
 
     console.log('📅 Todos los eventos obtenidos:', JSON.stringify(events, null, 2));
-    console.log('🔎 Buscando evento para fecha y hora actual:', fecha);
+    console.log('🔎 Buscando farmacia para fecha base:', fecha);
 
-    const now = new Date(); // Tomamos la fecha y hora actuales
+    // Usar la fecha base a las 8:30 AM para la comparación
+    const fechaBusqueda = new Date(`${fecha}T08:30:00`);
 
     const eventoDelDia = events.find(event => {
       const startDate = new Date(`${event.start.date}T08:30:00`);
       const endDate = new Date(`${event.end.date}T08:30:00`);
-
-      return now >= startDate && now < endDate;
+      return fechaBusqueda >= startDate && fechaBusqueda < endDate;
     });
 
     console.log('📝 Evento encontrado:', eventoDelDia);
