@@ -43,7 +43,6 @@ const getFarmacias = async (req, res) => {
 };
 
 // 🔹 Función utilitaria: farmacia por fecha
-// 🔹 Función utilitaria: farmacia por fecha con turno 8:30 a 8:30
 const getFarmaciaTurnoPorFecha = async (fecha) => {
   try {
     const events = await getEvents();
@@ -52,15 +51,15 @@ const getFarmaciaTurnoPorFecha = async (fecha) => {
     }
 
     console.log('📅 Todos los eventos obtenidos:', JSON.stringify(events, null, 2));
-    console.log('🔎 Buscando evento con fecha:', fecha);
+    console.log('🔎 Buscando evento para fecha y hora actual:', fecha);
 
-    const fechaBusqueda = new Date(`${fecha}T08:30:00`); // buscamos desde las 08:30
+    const now = new Date(); // Tomamos la fecha y hora actuales
 
     const eventoDelDia = events.find(event => {
       const startDate = new Date(`${event.start.date}T08:30:00`);
-      const endDate = new Date(`${event.end.date}T08:30:00`); // siguiente día a las 8:30
-      // Ajuste: turno de 8:30 a 8:30, incluimos la hora
-      return fechaBusqueda >= startDate && fechaBusqueda < endDate;
+      const endDate = new Date(`${event.end.date}T08:30:00`);
+
+      return now >= startDate && now < endDate;
     });
 
     console.log('📝 Evento encontrado:', eventoDelDia);
@@ -95,6 +94,7 @@ const getFarmaciaTurnoPorFecha = async (fecha) => {
     throw error;
   }
 };
+
 
 
 // 🔹 Controlador para devolver ayer, hoy y mañana
